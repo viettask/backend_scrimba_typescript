@@ -187,22 +187,21 @@ let person2: Person2 = {
 
 let people1: Person2[] = [person1, person2]
 
-function displayInfo(person:Person2)
-{
+function displayInfo(person: Person2) {
     console.log(`${person.name} lives at ${person.address?.street}`)
 }
- displayInfo(person1)
+displayInfo(person1)
 
- let ages:number[] =[100,101]
- //error: ages.push(true)
+let ages: number[] = [100, 101]
+//error: ages.push(true)
 
- //Unions
- type UserRole1 = "guest" | "member" | "admin"
+//Unions
+type UserRole1 = "guest" | "member" | "admin"
 
- type User1 ={
-    username:string,
+type User1 = {
+    username: string,
     role: UserRole1
- }
+}
 
 const users: User1[] = [
     { username: "john_doe", role: "member" },
@@ -210,10 +209,10 @@ const users: User1[] = [
     { username: "guest_user", role: "guest" }
 ];
 
- let userRole : UserRole1 = "member"
+let userRole: UserRole1 = "member"
 
- function fetchUserDetails(username: string) : User1 | undefined{
-    const user : User1 | undefined = users.find(user => user.username === username)
+function fetchUserDetails(username: string): User1 | undefined {
+    const user: User1 | undefined = users.find(user => user.username === username)
     if (!user) {
         throw new Error(`User with username ${username} not found`)
     }
@@ -221,3 +220,84 @@ const users: User1[] = [
 }
 
 //scrimba 
+
+type User = {
+    id: number
+    username: string
+    role: "member" | "contributor" | "admin"
+}
+
+// type UpdatedUser = {
+//     id?: number
+//     username?: string
+//     role?: "member" | "contributor" | "admin"
+// }
+
+type UpdatedUser = Partial<User>
+let nextUserId = 1
+
+const users1: User[] = [
+    { id: nextUserId++, username: "john_doe", role: "member" },
+    { id: nextUserId++, username: "jane_smith", role: "contributor" },
+    { id: nextUserId++, username: "alice_jones", role: "admin" },
+    { id: nextUserId++, username: "charlie_brown", role: "member" },
+];
+
+function updateUser(id: number, updates:  UpdatedUser) {
+    // Find the user in the array by the id
+    // Use Object.assign to update the found user in place. 
+    // Check MDN if you need help with using Object.assign
+
+    const foundUser = users1.find(user => user.id === id)
+    if (!foundUser) {
+        console.error("User not found!")
+        return
+    }
+    // Use Object.assign to update the found user in place. 
+    Object.assign(foundUser, updates)
+}
+
+function addNewUser(newUser: Omit<User, "id" | "username">): User {
+    // Create a new variable called `user`, add an `id` property to it
+    // and spread in all the properties of the `newUser` object. Think
+    // about how you should set the type for this `user` object.
+    // Push the new object to the `users` array, and return the object
+    // from the function at the end
+    const user9: User = {
+        id: nextUserId++,
+        ...newUser
+    }
+    users1.push(user9)
+    return user9
+}
+// example usage:
+addNewUser({ username: "joe_schmoe", role: "member" })
+addNewUser({ username: "jane" })
+
+// Example updates:
+updateUser(1, { username: "new_john_doe" });
+updateUser(4, { role: "contributor" });
+
+console.log(users)
+
+/*
+Utility Types
+1. Like a function, they take other types in as a parameter and retunr a new type,
+with some changes made to it
+
+2. Built-in to Typesript, perform commonly-needed modifications to existing types
+
+3. Use "Generic" syntax using angle bracket (<>)
+
+What does Partial type do?
+This modifies the type you pass in and turns all properties into optional properties.
+
+What does the Omit type do?
+Omit takes in a type AND a string (or union of strings)
+property name(s) and returns a new type with those properties removed.
+
+'Omit' is omitted by Scrimba
+In reality, it's just that Omit was introduced in Typescript v3.5, and Scrimba is currently using an older version
+*/
+
+//Generic
