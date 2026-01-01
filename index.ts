@@ -75,6 +75,20 @@ function placeOrder(pizzaName: string): Order | undefined {
 }
 
 /**
+ * Challenge: add types our generic `addToArray` function. It should work
+ * for adding new pizzas to the `menu` and adding new orders to the `orderQueue`
+ */
+//Generic
+function addToArray<T>(array: T[], item: T): T[] {
+    array.push(item)
+    return array
+}
+
+// example usage:
+addToArray<Pizza>(menu, {id: nextPizzaId++, name: "Chicken Bacon Ranch", price: 12 })
+addToArray<Order>(orderQueue, { id: nextOrderId++, pizza: menu[2], status: "completed" })
+
+/**
  * Marks an order as completed and returns the order object (or null if not found).
  */
 function completeOrder(orderId: number): Order | undefined {
