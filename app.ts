@@ -3,10 +3,10 @@ let bike: string
 bike = 'Winner'
 
 //number
-let num:number = 10
+let num: number = 10
 
 //boolean
-let isLoading:boolean = false
+let isLoading: boolean = false
 
 //undefined
 let body = undefined
@@ -15,19 +15,19 @@ let body = undefined
 let footer: null
 
 //any
-let person:any
+let person: any
 person = 10
 person = 'Something'
-person=false
+person = false
 
 //Object
-let house : {
+let house: {
     address: string
     color?: string
 } = {
     address: '',
 }
-house.address='Da Nang'
+house.address = 'Da Nang'
 
 //Array
 let products: any[] = []
@@ -40,27 +40,27 @@ let addresses: string[] = []
 addresses.push('Da Nang')
 
 let numbers: number[] = []
-numbers = [1,2,3]
+numbers = [1, 2, 3]
 
 //object array
 let people: {
     name: string,
-    age:number
+    age: number
 }[] = []
 people.push({
-    name:'Ducky',
-    age:27
+    name: 'Ducky',
+    age: 27
 })
 
 //function
-const sum = (num1:number, num2:number) => {
-    return num1+num2
+const sum = (num1: number, num2: number) => {
+    return num1 + num2
 }
 
-const sub: (num1:number, num2:number) => number = (
+const sub: (num1: number, num2: number) => number = (
     num1: number,
     num2: number
-) => num1-num2
+) => num1 - num2
 
 const handle = () => {
     console.log(123)
@@ -68,20 +68,20 @@ const handle = () => {
 
 //Union
 let price: string | number | boolean
-price ='10'
-price=20
-price=false
+price = '10'
+price = 20
+price = false
 
-let body1: {name:string | number} | {firstName: string} = {
+let body1: { name: string | number } | { firstName: string } = {
     name: 100
 }
 
 //Enum
 enum Sizes {
-    S='S',
-    M='M',
-    L='L',
-    XL='XL'
+    S = 'S',
+    M = 'M',
+    L = 'L',
+    XL = 'XL'
 }
 let size = Sizes.S
 
@@ -92,18 +92,18 @@ interface State {
 }
 
 interface State {
-    age:number
+    age: number
 }
 
 let state: State = {
-    name:'Dang',
-    isLoading:false,
+    name: 'Dang',
+    isLoading: false,
     age: 100
 }
 
 
 //Type
-type State1 {
+type State1 = {
     name: string,
     isLoading: boolean
 }
@@ -113,35 +113,34 @@ type State1 {
 // }
 
 let state1: State1 = {
-    name:'Dang',
-    isLoading:false,
+    name: 'Dang',
+    isLoading: false,
 }
 
-type Name ={
-    name:string
+type Name = {
+    name: string
 }
 
 type Age = {
-    age:number
+    age: number
 }
 
 type Person = Name | Age
 
-const handleClick = <Type> (value:Type) => value 
-let value =100
-handleClick<number> (value)
+const handleClick = <Type>(value: Type) => value
+let value = 100
+handleClick<number>(value)
 
 
 //Class
 class Person1 {
-    private name: string,
-    age: number,
-    readonly money:number = 40
+    private name: string;
+    age: number;
+    readonly money: number = 40;
 
-    constructor(name: string, age:number)
-    {
+    constructor(name: string, age: number) {
         this.name = name,
-        this.age = age
+            this.age = age
     }
 
     handle() {
@@ -154,38 +153,71 @@ alex.age
 
 //Type
 type Food = string
- let favouriteFood:Food ="pizza"
+let favouriteFood: Food = "pizza"
 
+type Address = {
+    street: string,
+    city: string,
+    country: string
+}
 
 type Person2 = {
     name: string
     age: number
     isStudent: boolean,
-    address:{
-        street:string,
-        city:string,
-        country:string
-    }
+    address?: Address
 }
 
 let person1: Person2 = {
     name: "Joe",
     age: 42,
-    isStudent: true,
-    address:{
-        street:"123 Main",
-        city:"Anytown",
-        country:"USA"
-    }
+    isStudent: true
 }
 
 let person2: Person2 = {
     name: "Jill",
     age: 66,
-    isStudent: false,   
-    address:{
-        street:"123 Main",
-        city:"Anytown",
-        country:"USA"
+    isStudent: false,
+    address: {
+        street: "123 Main",
+        city: "Anytown",
+        country: "USA"
     }
 }
+
+let people1: Person2[] = [person1, person2]
+
+function displayInfo(person:Person2)
+{
+    console.log(`${person.name} lives at ${person.address?.street}`)
+}
+ displayInfo(person1)
+
+ let ages:number[] =[100,101]
+ //error: ages.push(true)
+
+ //Unions
+ type UserRole1 = "guest" | "member" | "admin"
+
+ type User1 ={
+    username:string,
+    role: UserRole1
+ }
+
+const users: User1[] = [
+    { username: "john_doe", role: "member" },
+    { username: "jane_doe", role: "admin" },
+    { username: "guest_user", role: "guest" }
+];
+
+ let userRole : UserRole1 = "member"
+
+ function fetchUserDetails(username: string) : User1 | undefined{
+    const user : User1 | undefined = users.find(user => user.username === username)
+    if (!user) {
+        throw new Error(`User with username ${username} not found`)
+    }
+    return user
+}
+
+//scrimba 
